@@ -12,9 +12,9 @@ export function AuthProvider({ children }) {
   const navigate = useNavigate();
 
   // Register user
-  async function register(email, username, password) {
+  async function register({ email, username, password }) {
     try {
-      const response = await fetch(`${API}/users/register`, {
+      const response = await fetch(`${API}/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, username, password }),
@@ -44,7 +44,7 @@ export function AuthProvider({ children }) {
   // Login user
   async function login(username, password) {
     try {
-      const response = await fetch(`${API}/users/login`, {
+      const response = await fetch(`${API}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
@@ -74,7 +74,7 @@ export function AuthProvider({ children }) {
   // Authenticate user (verify token)
   async function authenticate(token) {
     try {
-      const response = await fetch(`${API}/users/me`, {
+      const response = await fetch(`${API}/me`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

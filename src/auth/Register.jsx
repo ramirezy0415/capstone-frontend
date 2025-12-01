@@ -9,12 +9,15 @@ export default function Register() {
 
   const onRegister = async (e) => {
     e.preventDefault();
+    console.log("Register clicked"); // test 
     setError(null);
 
     const formData = new FormData(e.target);
     const email = formData.get("email");
     const username = formData.get("username");
     const password = formData.get("password");
+
+    console.log({ email, username, password }) // debug log
 
     try {
       await register(email, username, password);
