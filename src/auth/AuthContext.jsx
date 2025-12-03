@@ -11,10 +11,13 @@ export function AuthProvider({ children }) {
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
 
+  console.log("API =", API);
+console.log("env =", import.meta.env);
+
   // Register user
   async function register({ email, username, password }) {
     try {
-      const response = await fetch(`${API}/register`, {
+      const response = await fetch(`${API}/users/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, username, password }),
@@ -44,7 +47,7 @@ export function AuthProvider({ children }) {
   // Login user
   async function login(username, password) {
     try {
-      const response = await fetch(`${API}/login`, {
+      const response = await fetch(`${API}/users/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
@@ -74,7 +77,7 @@ export function AuthProvider({ children }) {
   // Authenticate user (verify token)
   async function authenticate(token) {
     try {
-      const response = await fetch(`${API}/me`, {
+      const response = await fetch(`${API}/users/me`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -105,7 +108,7 @@ export function AuthProvider({ children }) {
   }
 
   const value = useMemo(() => {
-    return { token, user, isError, register, login, authenticate, logout };
+    return { token, isError, register, login, authenticate, logout };
   }, [token, user, isError]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

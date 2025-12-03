@@ -7,6 +7,7 @@ export default function Register() {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
 
+  console.log(navigate);
   const onRegister = async (e) => {
     e.preventDefault();
     console.log("Register clicked"); // test 
@@ -19,12 +20,17 @@ export default function Register() {
 
     console.log({ email, username, password }) // debug log
 
-    try {
-      await register(email, username, password);
+console.log("Before register");
+  await register({ email, username, password });
+  console.log("After register");
       navigate("/profile");
-    } catch (err) {
-      setError(err.message);
-    }
+
+    // try {
+    //   await register({ email, username, password });
+    //   navigate("/profile");
+    // } catch (err) {
+    //   setError(err.message);
+    // }
   };
 
   return (

@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router";
 import Layout from "./layout/Layout";
+import Homepage from "./pages/Homepage";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
 
-import Homepage from "./pages/Homepage";
 import Profile from "./pages/profile";
 import Groups from "./pages/Groups";
 import SplitBills from "./pages/SplitBills";
@@ -24,9 +24,9 @@ export default function App() {
         <Route
           path="/profile"
           element={
-            <ProtectedRoute>
+            // <ProtectedRoute>
               <Profile />
-            </ProtectedRoute>
+            /* </ProtectedRoute> */
           }
         />
         <Route
