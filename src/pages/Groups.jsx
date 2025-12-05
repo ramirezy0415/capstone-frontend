@@ -15,6 +15,7 @@ export default function Groups() {
       const group_name = formData.get("group_name");
       const description = formData.get("description");
       await createNewGroup(token, group_name, description);
+      e.target.reset();
     } catch (err) {
       console.error(err.message);
       setError(err.message);
