@@ -1,42 +1,54 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
-
 import { useAuth } from "./AuthContext";
 
-/** A form that allows users to log into an existing account. */
 export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
-
   const [error, setError] = useState(null);
 
-  const onLogin = async (formData) => {
+  const onLogin = async (e) => {
+    e.preventDefault();
+    setError(null);
+
+    const formData = new FormData(e.target);
     const username = formData.get("username");
     const password = formData.get("password");
+
     try {
-      await login({ username, password });
-      navigate("/");
-    } catch (e) {
-      setError(e.message);
+      const success = await login(username, password);
+      if (success) {
+        navigate("/profile");
+      } else {
+        setError("Invalid username or password.");
+      }
+    } catch (err) {
+      setError(err.message);
     }
   };
 
   return (
-    <>
-      <h1>Log in to your account</h1>
-      <form action={onLogin}>
-        <label>
-          Username
-          <input type="username" name="username" required />
-        </label>
-        <label>
-          Password
+    <div className="auth-container">
+      <div className="auth-card">
+        <h1>Login</h1>
+
+        <form className="auth-form" onSubmit={onLogin}>
+          <label>Username</label>
+          <input type="text" name="username" required />
+
+          <label>Password</label>
           <input type="password" name="password" required />
-        </label>
-        <button>Login</button>
-        {error && <output>{error}</output>}
-      </form>
-      <Link to="/register">Need an account? Register here.</Link>
-    </>
+
+          <button type="submit" className="auth-btn">Login</button>
+
+          {error && <p className="error-text">{error}</p>}
+        </form>
+
+        <p className="auth-footer">
+          Don’t have an account? <Link to="/register">Register here</Link>
+        </p>
+      </div>
+    </div>
   );
 }
+

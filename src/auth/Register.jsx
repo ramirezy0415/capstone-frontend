@@ -1,42 +1,63 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
-
 import { useAuth } from "./AuthContext";
 
-/** A form that allows users to register for a new account */
 export default function Register() {
   const { register } = useAuth();
   const navigate = useNavigate();
-
   const [error, setError] = useState(null);
 
-  const onRegister = async (formData) => {
+  console.log(navigate);
+  const onRegister = async (e) => {
+    e.preventDefault();
+    console.log("Register clicked"); // test 
+    setError(null);
+
+    const formData = new FormData(e.target);
+    const email = formData.get("email");
     const username = formData.get("username");
     const password = formData.get("password");
-    try {
-      await register({ username, password });
-      navigate("/");
-    } catch (e) {
-      setError(e.message);
-    }
+
+    console.log({ email, username, password }) 
+
+console.log("Before register");
+  await register({ email, username, password });
+  console.log("After register");
+      navigate("/profile");
+
+    // try {
+    //   await register({ email, username, password });
+    //   navigate("/profile");
+    // } catch (err) {
+    //   setError(err.message);
+    // }
   };
 
   return (
-    <>
-      <h1>Register for an account</h1>
-      <form action={onRegister}>
-        <label>
-          Username
-          <input type="text" name="username" />
-        </label>
-        <label>
-          Password
+    <div className="auth-container">
+      <div className="auth-card">
+        <h1>Register</h1>
+
+        <form className="auth-form" onSubmit={onRegister}>
+          <label>Email</label>
+          <input type="email" name="email" required />
+
+          <label>Username</label>
+          <input type="text" name="username" required />
+
+          <label>Password</label>
           <input type="password" name="password" required />
-        </label>
-        <button>Register</button>
-        {error && <output>{error}</output>}
-      </form>
-      <Link to="/login">Already have an account? Log in here.</Link>
-    </>
+
+          <button type="submit" className="auth-btn">Register</button>
+
+          {error && <p className="error-text">{error}</p>}
+        </form>
+
+        <p className="auth-footer">
+          Already have an account? <Link to="/login">Login here</Link>
+        </p>
+      </div>
+    </div>
   );
 }
+

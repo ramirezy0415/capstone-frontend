@@ -1,5 +1,5 @@
 {
-  "name": "foobar",
+  "name": "even-exchanges",
   "type": "module",
   "scripts": {
     "dev": "vite",
