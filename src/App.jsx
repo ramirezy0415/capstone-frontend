@@ -6,6 +6,8 @@ import Register from "./auth/Register";
 
 import Profile from "./pages/profile";
 import Groups from "./pages/Groups";
+import GroupsList from "./pages/GroupsList";
+import NewGroup from "./pages/NewGroup";
 import SplitBills from "./pages/SplitBills";
 
 import ProtectedRoute from "./layout/ProtectedRoute";
@@ -25,18 +27,16 @@ export default function App() {
           path="/profile"
           element={
             // <ProtectedRoute>
-              <Profile />
+            <Profile />
             /* </ProtectedRoute> */
           }
         />
-        <Route
-          path="/groups"
-          element={
-            <ProtectedRoute>
-              <Groups />
-            </ProtectedRoute>
-          }
-        />
+        {/* <Route element={<ProtectedRoute />}> */}
+        <Route path="/groups" element={<Groups />}>
+          <Route index element={<GroupsList />} />
+          <Route path="new" element={<NewGroup />} />
+        </Route>
+        {/* </Route> */}
         <Route
           path="/splitbills"
           element={

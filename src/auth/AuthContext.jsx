@@ -8,20 +8,17 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [token, setToken] = useState(localStorage.getItem("token") || null);
   const [user, setUser] = useState(() => {
-  try {
-    const stored = localStorage.getItem("user");
-    return stored ? JSON.parse(stored) : null;
-  } catch (e) {
-    console.error("Invalid user in localStorage", e);
-    return null;
-  }
-});
+    try {
+      const stored = localStorage.getItem("user");
+      return stored ? JSON.parse(stored) : null;
+    } catch (e) {
+      console.error("Invalid user in localStorage", e);
+      return null;
+    }
+  });
 
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
-
-  console.log("API =", API);
-console.log("env =", import.meta.env);
 
   // Register user
   async function register({ email, username, password }) {
@@ -128,4 +125,4 @@ export function useAuth() {
   const context = useContext(AuthContext);
   if (!context) throw new Error("useAuth must be used within an AuthProvider");
   return context;
-};
+}
