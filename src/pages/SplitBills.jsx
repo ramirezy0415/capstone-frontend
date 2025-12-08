@@ -106,6 +106,11 @@ export default function SplitBills() {
     return shares;
   };
 
+const mapSplitTypeToDB = (type) => {
+  if (type === "byItem") return "custom"; // map "byItem" → "custom"
+  return type; 
+};
+
   // Submit form
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -124,7 +129,7 @@ export default function SplitBills() {
       groupName,
       usernames: usernameList,
       items,
-      splitType,
+      splitType: mapSplitTypeToDB(splitType),
       shares,
       createdBy: user?.username,
     };
