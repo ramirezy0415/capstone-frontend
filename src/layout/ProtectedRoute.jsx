@@ -1,7 +1,8 @@
 import { Navigate } from "react-router";
 import { useAuth } from "../auth/AuthContext";
+import { Outlet } from "react-router";
 
-export default function ProtectedRoute({ children }) {
+export default function ProtectedRoute() {
   const { token } = useAuth();
 
   // If no token, send them to login page
@@ -10,5 +11,5 @@ export default function ProtectedRoute({ children }) {
   }
 
   // If logged in, show the page
-  return children;
+  return <Outlet />;
 }

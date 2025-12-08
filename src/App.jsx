@@ -23,28 +23,11 @@ export default function App() {
         <Route path="/register" element={<Register />} />
 
         {/* Protected routes */}
-        <Route
-          path="/profile"
-          element={
-            // <ProtectedRoute>
-            <Profile />
-            /* </ProtectedRoute> */
-          }
-        />
-        {/* <Route element={<ProtectedRoute />}> */}
-        <Route path="/groups" element={<Groups />}>
-          <Route index element={<GroupsList />} />
-          <Route path="new" element={<NewGroup />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/groups" element={<Groups />} />
+          <Route path="/splitbills" element={<SplitBills />} />
         </Route>
-        {/* </Route> */}
-        <Route
-          path="/splitbills"
-          element={
-            <ProtectedRoute>
-              <SplitBills />
-            </ProtectedRoute>
-          }
-        />
       </Route>
     </Routes>
   );
