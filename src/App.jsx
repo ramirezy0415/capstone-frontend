@@ -25,7 +25,10 @@ export default function App() {
         {/* Protected routes */}
         <Route element={<ProtectedRoute />}>
           <Route path="/profile" element={<Profile />} />
-          <Route path="/groups" element={<Groups />} />
+          <Route path="/groups" element={<Groups />}>
+            <Route index element={<GroupsList />} />
+            <Route path="new" element={<NewGroup />} />
+          </Route>
           <Route path="/splitbills" element={<SplitBills />} />
         </Route>
       </Route>
