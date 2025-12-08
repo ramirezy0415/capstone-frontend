@@ -4,7 +4,8 @@ import { getProfile } from "../api/profile";
 
 export default function Profile() {
   const { user, token } = useAuth();
-  const [profile, setProfile] = useState(null);
+  const [totalOwed, setTotalOwed] = useState(0);
+  const [expenses, setExpenses] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -13,37 +14,35 @@ export default function Profile() {
     async function fetchProfile() {
       try {
         const data = await getProfile(token);
-        setProfile(data); // store full profile data from backend
+
+        // Convert totalOwed to number safely
+        setTotalOwed(Number(data.totalOwed) || 0);
+
+        // Set expenses, fallback to empty array
+        setExpenses(data.expenses || []);
       } catch (err) {
-        setError(err.message);
+        console.error("Failed to load profile:", err);
+        setError(err.message || "Failed to load profile");
       }
     }
 
     fetchProfile();
   }, [token]);
 
-  if (!profile) {
-    return <p>Loading profile...</p>;
-  }
-
   return (
     <div className="profile-container">
-      <h1>Hello {profile.username}!</h1>
+      <h1>Hello {user?.username}!</h1>
 
       {error && <p className="error-text">{error}</p>}
 
-      <p>Total Owed: ${profile.totalOwed?.toFixed(2) || "0.00"}</p>
+      <h2>Total Owed: ${totalOwed.toFixed(2)}</h2>
 
       <h2>Your Expenses</h2>
-      {profile.expenses && profile.expenses.length > 0 ? (
+      {expenses.length ? (
         <ul>
-          {profile.expenses.map((e) => (
-            <li key={e.id} className="expense-item">
-              <p><strong>Group:</strong> {e.group_name}</p>
-              <p><strong>Item:</strong> {e.item_name}</p>
-              <p><strong>Total:</strong> ${e.total.toFixed(2)}</p>
-              <p><strong>Type:</strong> {e.type}</p>
-              <p><strong>Owed:</strong> ${e.amountOwed?.toFixed(2) || "0.00"}</p>
+          {expenses.map((e) => (
+            <li key={e.id}>
+              {e.item_name} (${Number(e.item_amount).toFixed(2)}) - {e.group_name}
             </li>
           ))}
         </ul>
