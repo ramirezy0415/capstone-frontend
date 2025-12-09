@@ -19,6 +19,11 @@ export default function GroupsList() {
     navigate("new");
   };
 
+  const handleViewGroupDetails = (groupId) => {
+    console.log(`navigate(${groupId});`);
+    // navigate(groupId);
+  };
+
   useEffect(() => {
     syncGroups();
   }, []);
@@ -30,7 +35,16 @@ export default function GroupsList() {
       </button>
       <li>
         {userGroups.map((group) => (
-          <ul key={group.id}>{group.name}</ul>
+          <ul key={group.id}>
+            {group.name}
+            <button
+              onClick={() => {
+                handleViewGroupDetails(group.id);
+              }}
+            >
+              View Details
+            </button>
+          </ul>
         ))}
       </li>
     </div>
