@@ -31,12 +31,10 @@ export default function SplitBills() {
     setItems(updatedItems);
   };
 
-  const handleUsernameChange = (index, value) => {
+   const handleUsernameChange = (index, value) => {
     const updatedUsernames = [...usernames];
     const oldName = updatedUsernames[index].username;
-
-    const normalizedValue = value.toLowerCase();
-    updatedUsernames[index].username = normalizedValue;
+    updatedUsernames[index].username = value;
     setUsernames(updatedUsernames);
 
     if (splitType === "percentage" && oldName in percentages) {
