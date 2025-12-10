@@ -11,6 +11,7 @@ import NewGroup from "./pages/NewGroup";
 import SplitBills from "./pages/SplitBills";
 
 import ProtectedRoute from "./layout/ProtectedRoute";
+import GroupDetails from "./pages/GroupDetails";
 import ExpenseDetail from "./pages/ExpenseDetail";
 
 export default function App() {
@@ -28,6 +29,7 @@ export default function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/groups" element={<Groups />}>
             <Route index element={<GroupsList />} />
+            <Route path=":id" element={<GroupDetails />} />
             <Route path="new" element={<NewGroup />} />
           </Route>
           <Route path="expense/:id" element={<ExpenseDetail />} />
