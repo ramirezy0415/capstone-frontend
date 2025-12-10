@@ -34,19 +34,21 @@ export default function SplitBills() {
   const handleUsernameChange = (index, value) => {
     const updatedUsernames = [...usernames];
     const oldName = updatedUsernames[index].username;
-    updatedUsernames[index].username = value;
+
+    const normalizedValue = value.toLowerCase();
+    updatedUsernames[index].username = normalizedValue;
     setUsernames(updatedUsernames);
 
     if (splitType === "percentage" && oldName in percentages) {
       const updatedPercentages = { ...percentages };
-      updatedPercentages[value] = updatedPercentages[oldName];
+      updatedPercentages[normalizedValue] = updatedPercentages[oldName];
       delete updatedPercentages[oldName];
       setPercentages(updatedPercentages);
     }
 
     const updatedItems = items.map((item) => ({
       ...item,
-      assigned: item.assigned.map((u) => (u === oldName ? value : u)),
+      assigned: item.assigned.map((u) => (u === oldName ? normalizedValue : u)),
     }));
     setItems(updatedItems);
   };
@@ -56,6 +58,12 @@ export default function SplitBills() {
   const handleItemChange = (index, field, value) => {
     const updatedItems = [...items];
     updatedItems[index][field] = value;
+    setItems(updatedItems);
+  };
+
+  const removeItem = (index) => {
+    const updatedItems = [...items];
+    updatedItems.splice(index, 1);
     setItems(updatedItems);
   };
 
@@ -102,10 +110,10 @@ export default function SplitBills() {
     return shares;
   };
 
-const mapSplitTypeToDB = (type) => {
-  if (type === "byItem") return "custom";
-  return type; 
-};
+  const mapSplitTypeToDB = (type) => {
+    if (type === "byItem") return "custom";
+    return type;
+  };
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -115,6 +123,17 @@ const mapSplitTypeToDB = (type) => {
     if (!usernameList.length) {
       setError("Please add at least one username.");
       return;
+    }
+
+    if (splitType === "percentage") {
+      const totalPercent = Object.values(percentages).reduce(
+        (sum, val) => sum + Number(val || 0),
+        0
+      );
+      if (totalPercent !== 100) {
+        setError("Percentages must sum to 100%.");
+        return;
+      }
     }
 
     const shares = calculateShares();
@@ -130,7 +149,7 @@ const mapSplitTypeToDB = (type) => {
 
     try {
       const response = await createExpense(token, billData);
-      navigate("/profile"); 
+      navigate("/profile");
     } catch (err) {
       setError("Failed to submit bill. Please try again.");
     }
@@ -195,6 +214,11 @@ const mapSplitTypeToDB = (type) => {
                 min="0"
                 step="0.01"
               />
+              {items.length > 1 && (
+                <button type="button" onClick={() => removeItem(index)}>
+                  Remove Item
+                </button>
+              )}
               {splitType === "byItem" && (
                 <div>
                   <label>Assign to:</label>
@@ -285,5 +309,3 @@ const mapSplitTypeToDB = (type) => {
     </div>
   );
 }
-
-
