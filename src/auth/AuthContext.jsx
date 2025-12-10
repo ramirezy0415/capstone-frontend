@@ -20,7 +20,7 @@ export function AuthProvider({ children }) {
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
 
-  // Register user
+
   async function register({ email, username, password }) {
     try {
       const response = await fetch(`${API}/users/register`, {
@@ -35,7 +35,7 @@ export function AuthProvider({ children }) {
         throw new Error(data.message || "Registration failed");
       }
 
-      // Save token and user
+
       setToken(data.token);
       setUser(data.user);
       localStorage.setItem("token", data.token);
@@ -50,7 +50,7 @@ export function AuthProvider({ children }) {
     }
   }
 
-  // Login user
+
   async function login(username, password) {
     try {
       const response = await fetch(`${API}/users/login`, {
@@ -80,7 +80,7 @@ export function AuthProvider({ children }) {
     }
   }
 
-  // Authenticate user (verify token)
+
   async function authenticate(token) {
     try {
       const response = await fetch(`${API}/users/me`, {
@@ -103,7 +103,7 @@ export function AuthProvider({ children }) {
     }
   }
 
-  // Logout
+
   function logout() {
     setToken(null);
     setUser(null);
@@ -114,13 +114,13 @@ export function AuthProvider({ children }) {
   }
 
   const value = useMemo(() => {
-    return { token, isError, register, login, authenticate, logout };
+    return { token, user, isError, register, login, authenticate, logout };
   }, [token, user, isError]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
-// Hook to use auth anywhere
+
 export function useAuth() {
   const context = useContext(AuthContext);
   if (!context) throw new Error("useAuth must be used within an AuthProvider");
