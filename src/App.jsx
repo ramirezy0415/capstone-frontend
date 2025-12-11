@@ -32,8 +32,9 @@ export default function App() {
             <Route path=":id" element={<GroupDetails />} />
             <Route path="new" element={<NewGroup />} />
           </Route>
-          <Route path="expense/:id" element={<ExpenseDetail />} />
-          <Route path="/splitbills" element={<SplitBills />} />
+
+          <Route path="/splitbills" element={<SplitBills />}></Route>
+          <Route path="/splitbills/:id" element={<ExpenseDetail />} />
         </Route>
       </Route>
     </Routes>

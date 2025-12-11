@@ -21,11 +21,36 @@ export default function ExpenseDetail() {
     syncExpenseDetails();
   }, []);
 
-  console.log(selectedExpense);
   return (
     <div>
       <button onClick={handleBackButton}>Back</button>
-      <h1>Expense Detail for {id}</h1>
+      <section>
+        <h2>
+          Expense ID: {selectedExpense.expense_id} <br />
+          Group Name: {selectedExpense.group_name}
+        </h2>
+        <p>
+          Split Type: {selectedExpense.split_type} <br />
+          Expense Total: {selectedExpense.expense_total} <br />
+        </p>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Item Name</th>
+              <th>Item Quantity</th>
+              <th>Item Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{selectedExpense.item_name}</td>
+              <td>{selectedExpense.quantity}</td>
+              <td>{selectedExpense.price}</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
     </div>
   );
 }

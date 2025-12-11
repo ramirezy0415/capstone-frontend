@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 export default function ExpensesList({ expenses }) {
   const navigate = useNavigate();
   const handleViewExpenseDetailButton = (expense_id) => {
-    navigate(`/expense/${expense_id}`);
+    navigate(`/splitbills/${expense_id}`);
   };
 
   return (

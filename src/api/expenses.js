@@ -25,7 +25,7 @@ export async function createExpense(token, billData) {
 
 export async function getExpenseDetails(token, expense_id) {
   try {
-    const res = await fetch(`${API}/expense/${expense_id}`, {
+    const res = await fetch(`${BASE_EXPENSES_URL}/${expense_id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -33,7 +33,6 @@ export async function getExpenseDetails(token, expense_id) {
       },
     });
 
-    console.log(res);
     const data = await res.json();
 
     if (!res.ok) throw new Error(data.error || "Failed to create expense");
