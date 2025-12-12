@@ -56,7 +56,7 @@ export default function SplitBills() {
     setItems(updatedItems);
   };
 
-   const handleUsernameChange = (index, value) => {
+  const handleUsernameChange = (index, value) => {
     const updatedUsernames = [...usernames];
     const oldValue = updatedUsernames[index].username;
     updatedUsernames[index].username = value;
