@@ -39,9 +39,9 @@ export default function SplitBills() {
   };
 
   const removeUsername = (index) => {
-    const updated = [...usernames];
-    const removed = updated.splice(index, 1)[0];
-    setUsernames(updated);
+     const updatedUsernames = [...usernames];
+    const removed = updatedUsernames.splice(index, 1)[0];
+    setUsernames(updatedUsernames);
 
     const updatedPercentages = { ...percentages };
     delete updatedPercentages[removed.username];
@@ -77,17 +77,9 @@ export default function SplitBills() {
   const addItem = () =>
     setItems([...items, { name: "", amount: "", assigned: [] }]);
 
-  const handleItemChange = (index, field, value) => {
-    const updated = [...items];
-    updated[index][field] = value;
-    setItems(updated);
-  };
-
-  // const removeItem = (index) => {
-  //   const updated = [...items];
-  //   updated.splice(index, 1);
-  //   setItems(updated);
-  // };
+ const updatedItems = [...items];
+    updatedItems[index][field] = value;
+    setItems(updatedItems);
 
   const removeItem = (index) => {
     const updatedItems = [...items];
@@ -96,8 +88,8 @@ export default function SplitBills() {
   };
 
   const toggleAssignUser = (itemIndex, username) => {
-    const updated = [...items];
-    const assigned = updated[itemIndex].assigned || [];
+    const updatedItems = [...items];
+    const assigned = updatedItems[itemIndex].assigned || [];
     updated[itemIndex].assigned = assigned.includes(username)
       ? assigned.filter((u) => u !== username)
       : [...assigned, username];
