@@ -56,7 +56,7 @@ export default function SplitBills() {
     setItems(updatedItems);
   };
 
-  const handleUsernameChange = (index, value) => {
+   const handleUsernameChange = (index, value) => {
     const updatedUsernames = [...usernames];
     const oldValue = updatedUsernames[index].username;
     updatedUsernames[index].username = value;
@@ -64,14 +64,14 @@ export default function SplitBills() {
 
     if (splitType === "percentage" && oldValue in percentages) {
       const updatedPercentages = { ...percentages };
-      updatedPercentages[value] = updatedPercentages[oldValue];
-      delete updatedPercentages[oldValue];
+      updatedPercentages[normalizedValue] = updatedPercentages[oldName];
+      delete updatedPercentages[oldName];
       setPercentages(updatedPercentages);
     }
 
     const updatedItems = items.map((item) => ({
       ...item,
-      assigned: item.assigned.map((u) => (u === oldValue ? value : u)),
+      assigned: item.assigned.map((u) => (u === oldName ? normalizedValue : u)),
     }));
     setItems(updatedItems);
   };
@@ -89,6 +89,12 @@ export default function SplitBills() {
     const updated = [...items];
     updated.splice(index, 1);
     setItems(updated);
+  };
+
+  const removeItem = (index) => {
+    const updatedItems = [...items];
+    updatedItems.splice(index, 1);
+    setItems(updatedItems);
   };
 
   const toggleAssignUser = (itemIndex, username) => {
@@ -151,15 +157,17 @@ export default function SplitBills() {
     }
 
     if (splitType === "percentage") {
-      const totalPct = Object.values(percentages).reduce(
-        (sum, value) => sum + Number(value),
+      const totalPercent = Object.values(percentages).reduce(
+        (sum, val) => sum + Number(val || 0),
         0
       );
-      if (totalPct !== 100) {
-        setError("Percentages must total 100%.");
+      if (totalPercent !== 100) {
+        setError("Percentages must sum to 100%.");
         return;
       }
     }
+
+    const shares = calculateShares();
 
     const billData = {
       groupName,
@@ -171,7 +179,7 @@ export default function SplitBills() {
     };
 
     try {
-      await createExpense(token, billData);
+      const response = await createExpense(token, billData);
       navigate("/profile");
     } catch (err) {
       setError("Failed to submit bill. Please try again.");
@@ -244,13 +252,11 @@ export default function SplitBills() {
                 min="0"
                 step="0.01"
               />
-
               {items.length > 1 && (
                 <button type="button" onClick={() => removeItem(index)}>
                   Remove Item
                 </button>
               )}
-
               {splitType === "byItem" && (
                 <div>
                   <label>Assign to:</label>
