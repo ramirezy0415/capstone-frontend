@@ -85,11 +85,11 @@ export default function SplitBills() {
     setItems(updated);
   };
 
-  const removeItem = (index) => {
-    const updated = [...items];
-    updated.splice(index, 1);
-    setItems(updated);
-  };
+  // const removeItem = (index) => {
+  //   const updated = [...items];
+  //   updated.splice(index, 1);
+  //   setItems(updated);
+  // };
 
   const removeItem = (index) => {
     const updatedItems = [...items];
