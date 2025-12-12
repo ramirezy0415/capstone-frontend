@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../auth/AuthContext";
 import { getProfile } from "../api/profile";
+import ExpensesList from "./ExpensesList";
 
 export default function Profile() {
   const { user, token } = useAuth();
@@ -17,7 +18,7 @@ export default function Profile() {
 
         setTotalOwed(Number(data.totalOwed) || 0);
 
-        setExpenses(data.expenses || []);
+        setExpenses(data.expensesOwed || []);
       } catch (err) {
         console.error("Failed to load profile:", err);
         setError(err.message || "Failed to load profile");
@@ -36,18 +37,7 @@ export default function Profile() {
       <h2>Total Owed: ${totalOwed.toFixed(2)}</h2>
 
       <h2>Your Expenses</h2>
-      {expenses.length ? (
-        <ul>
-          {expenses.map((e) => (
-            <li key={e.id}>
-              {e.item_name} (${Number(e.item_amount).toFixed(2)}) - {e.group_name}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No expenses yet.</p>
-      )}
+      <ExpensesList expenses={expenses} />
     </div>
   );
 }
-
