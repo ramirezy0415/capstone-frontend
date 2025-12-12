@@ -14,8 +14,6 @@ export default function SplitBills() {
 
   const [groupQuery, setGroupQuery] = useState("");
   const [groupResults, setGroupResults] = useState([]);
-  const [userQuery, setUserQuery] = useState("");
-  const [userResults, setUserResults] = useState([]);
 
   const [items, setItems] = useState([{ name: "", amount: "", assigned: [] }]);
   const [splitType, setSplitType] = useState("even");
