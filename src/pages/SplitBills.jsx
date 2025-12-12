@@ -77,9 +77,11 @@ export default function SplitBills() {
   const addItem = () =>
     setItems([...items, { name: "", amount: "", assigned: [] }]);
 
- const updatedItems = [...items];
-    updatedItems[index][field] = value;
-    setItems(updatedItems);
+   const handleItemChange = (index, field, value) => {
+    const updated = [...items];
+    updated[index][field] = value;
+    setItems(updated);
+   };
 
   const removeItem = (index) => {
     const updatedItems = [...items];
