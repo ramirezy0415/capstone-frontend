@@ -218,10 +218,10 @@ export default function SplitBills() {
                 </button>
               )}
               {splitType === "byItem" && (
-                <div>
+                <div className="assign-to-container">
                   <label>Assign to:</label>
                   {usernames.map((u) => (
-                    <label key={u.username}>
+                    <label key={u.username} className="assign-to-label">
                       <input
                         type="checkbox"
                         checked={item.assigned.includes(u.username)}
@@ -239,7 +239,7 @@ export default function SplitBills() {
           </button>
 
           <h3>Split Type</h3>
-          <label>
+          <label className="split-type-option">
             <input
               type="radio"
               value="even"
@@ -248,7 +248,7 @@ export default function SplitBills() {
             />
             Even
           </label>
-          <label>
+          <label className="split-type-option">
             <input
               type="radio"
               value="byItem"
@@ -257,7 +257,7 @@ export default function SplitBills() {
             />
             By Item
           </label>
-          <label>
+          <label className="split-type-option">
             <input
               type="radio"
               value="percentage"
