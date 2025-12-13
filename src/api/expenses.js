@@ -43,3 +43,21 @@ export async function getExpenseDetails(token, expense_id) {
     throw err;
   }
 }
+
+export async function updateExpensePaid(token, expense_id, is_paid) {
+  const res = await fetch(`${BASE_EXPENSES_URL}/${expense_id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ is_paid }),
+  });
+
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.error || "Failed to update expense");
+  }
+
+  return await res.json();
+}
