@@ -4,7 +4,7 @@ import Homepage from "./pages/Homepage";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
 
-import Profile from "./pages/profile";
+import Profile from "./pages/Profile";
 import Groups from "./pages/Groups";
 import GroupsList from "./pages/GroupsList";
 import NewGroup from "./pages/NewGroup";
