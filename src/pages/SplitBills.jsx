@@ -89,14 +89,17 @@ export default function SplitBills() {
     setItems(updatedItems);
   };
 
-  const toggleAssignUser = (itemIndex, username) => {
-    const updatedItems = [...items];
-    const assigned = updatedItems[itemIndex].assigned || [];
-    updated[itemIndex].assigned = assigned.includes(username)
-      ? assigned.filter((u) => u !== username)
-      : [...assigned, username];
-    setItems(updated);
-  };
+const toggleAssignUser = (itemIndex, username) => {
+  const updatedItems = [...items];
+
+  const assigned = updatedItems[itemIndex].assigned || [];
+
+  updatedItems[itemIndex].assigned = assigned.includes(username)
+    ? assigned.filter((u) => u !== username)
+    : [...assigned, username];
+
+  setItems(updatedItems);
+};
 
   const handlePercentageChange = (username, value) => {
     setPercentages({ ...percentages, [username]: Number(value) });
