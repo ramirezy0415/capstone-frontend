@@ -14,14 +14,12 @@ export default function ExpenseDetail() {
 
   const handleMarkAsPaid = async () => {
     const nextIsPaid = !selectedExpense.is_paid;
-    // console.log("Next state: ", nextIsPaid);
     await updateExpensePaid(token, id, nextIsPaid);
     await syncExpenseDetails();
   };
 
   const syncExpenseDetails = async () => {
     const details = await getExpenseDetails(token, id);
-    console.log(details);
     setSelectedExpense(details);
   };
 
