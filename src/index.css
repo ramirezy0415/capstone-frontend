@@ -111,20 +111,24 @@ section {
   box-shadow: var(--shadow);
 }
 
-/* SplitBills Item/User sections */
-.expense-item,
-.username-entry {
+
+/* Put each radio label on its own line */
+.split-type-option {
   display: flex;
-  flex-direction: row;
-  padding: 10px;
-  border: 1px dashed #eee;
-  border-radius: var(--border-radius);
+  align-items: center;
+  gap: 12px;      /* space between radio & text */
+  margin-bottom: 6px;
 }
 
-.expense-item input,
-.username-entry input {
-  flex: 1;
-  width: 100%;
+.assign-to-container {
+  margin-top: 8px;      /* space above this whole block */
+}
+
+.assign-to-label {
+  display: flex;        /* puts checkbox + text side-by-side neatly */
+  align-items: center;
+  gap: 8px;             /* space between checkbox and username */
+  margin-bottom: 4px;   /* space between each user row */
 }
 
 button {
